@@ -1,39 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_practical_task/utils/Color.dart';
 import 'package:flutter_practical_task/utils/Constants.dart';
 import 'package:flutter_practical_task/utils/dimens.dart';
 
 import 'AllPracticesView.dart';
+import 'MentalTrainingView.dart';
 import 'ProfileView.dart';
 import 'custom/MyTextview.dart';
-
 
 class DashboardView extends StatefulWidget {
   @override
   _DashboardViewState createState() => _DashboardViewState();
 }
 
-class _DashboardViewState extends State<DashboardView> {
+class _DashboardViewState extends State<DashboardView> with SingleTickerProviderStateMixin{
+  int selectedTabPosition = 0;
+
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new TabController(length: 4, vsync: this);
+    _tabController.addListener(_handleTabSelection);
+
+  }
+
+
+  void _handleTabSelection() {
+    setState(() {
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
           length: 4,
-          child: Scaffold(
+            child: Scaffold(
             body: TabBarView(
                 children: [
                   getBodyContentView(context),
                   getBodyContentView(context),
                   getBodyContentView(context),
                   ProfileView()
-                ]
+                ],
+              controller: _tabController,
             ),
             bottomNavigationBar: TabBar(
+              controller: _tabController,
+              indicatorColor: Color(darkBlueColor),
               tabs: [
-                Tab(icon: Image.asset(ImageName.HOME_ICON)),
-                Tab(icon: Image.asset(ImageName.LESSONS_ICON)),
-                Tab(icon: Image.asset(ImageName.MEDITATION_ICON)),
-                Tab(icon: Image.asset(ImageName.PROFILE_ICON))
+                Tab(icon: Image.asset(ImageName.HOME_ICON, color: _tabController.index == 0 ? Color(darkBlueColor): Color(greyIconColor))),
+                Tab(icon: Image.asset(ImageName.LESSONS_ICON, color: _tabController.index == 1 ? Color(darkBlueColor): Color(greyIconColor))),
+                Tab(icon: Image.asset(ImageName.MEDITATION_ICON, color: _tabController.index == 2 ? Color(darkBlueColor): Color(greyIconColor))),
+                Tab(icon: Image.asset(ImageName.PROFILE_ICON, color: _tabController.index == 3 ? Color(darkBlueColor): Color(greyIconColor)))
               ],
             ),
           )
@@ -116,7 +138,7 @@ class _DashboardViewState extends State<DashboardView> {
                     CV.POPULAR,
                     color: Colors.black,
                     fontSize: Dimens.dimen_16dp,
-                    fontName: "SFRegular",
+                    fontName: FontName.SF_REGULAR,
                   )
               ),
               GestureDetector(
@@ -125,7 +147,7 @@ class _DashboardViewState extends State<DashboardView> {
                     CV.SEE_ALL,
                     color: Color(blueAccentColor),
                     fontSize: Dimens.dimen_14dp,
-                    fontName: "SFRegular",
+                    fontName: FontName.SF_REGULAR,
                   ),
                 ),
                 onTap: (){
@@ -143,7 +165,13 @@ class _DashboardViewState extends State<DashboardView> {
               itemCount: 5,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context,index){
-                return rowPopularEvents(index);
+                return GestureDetector(
+                  child: rowPopularEvents(index),
+                  onTap: (){
+                    Navigator.of(context).push( MaterialPageRoute(
+                        builder: (context)=> MentalTrainingView()));
+                  },
+                );
               }
           ),
         ),
@@ -160,7 +188,7 @@ class _DashboardViewState extends State<DashboardView> {
                   CV.NEW,
                   color: Colors.black,
                   fontSize: Dimens.dimen_16dp,
-                  fontName: "SFRegular",
+                  fontName: FontName.SF_REGULAR,
                 )
               ),
               GestureDetector(
@@ -168,7 +196,7 @@ class _DashboardViewState extends State<DashboardView> {
                   child: MyTextview(CV.SEE_ALL,
                     color: Colors.lightBlue,
                     fontSize: Dimens.dimen_14dp,
-                    fontName: "SFRegular",
+                    fontName: FontName.SF_REGULAR,
                   ),
                 ),
                 onTap: (){
@@ -186,7 +214,13 @@ class _DashboardViewState extends State<DashboardView> {
               itemCount: 5,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context,index){
-                return rowNewEvents(index);
+                return GestureDetector(
+                  child: rowNewEvents(index),
+                  onTap: (){
+                    Navigator.of(context).push( MaterialPageRoute(
+                        builder: (context)=> MentalTrainingView()));
+                  },
+                );
               }
           ),
         )

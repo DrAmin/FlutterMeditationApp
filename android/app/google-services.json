@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "688884853125",
+    "firebase_url": "https://fluttermeditationapp.firebaseio.com",
+    "project_id": "fluttermeditationapp",
+    "storage_bucket": "fluttermeditationapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688884853125:android:1ea87b571c4f7fe36afcec",
+        "android_client_info": {
+          "package_name": "com.practicaltask.flutter_practical_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688884853125-d2bg60d27r5evlvmdd5gvs7fhto354p4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWZcrOJTZn01SPxelL5fW5rv7MtcoHVnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688884853125-d2bg60d27r5evlvmdd5gvs7fhto354p4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

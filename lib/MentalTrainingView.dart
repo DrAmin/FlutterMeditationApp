@@ -2,7 +2,6 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practical_task/utils/Constants.dart';
 import 'package:flutter_practical_task/utils/dimens.dart';
-import 'package:seekbar/seekbar.dart';
 
 import 'custom/CustomSeekbarView.dart';
 import 'custom/MyTextview.dart';

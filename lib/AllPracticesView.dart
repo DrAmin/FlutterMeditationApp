@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_practical_task/utils/Color.dart';
 import 'package:flutter_practical_task/utils/Constants.dart';
-
 import 'MentalTrainingView.dart';
 import 'custom/MyTextview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PracticesView extends StatefulWidget {
   @override
@@ -29,6 +30,32 @@ class _PracticesViewState extends State<PracticesView> {
       ),
       body: Container(
         color: Colors.white,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('Popular').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+//            if (!snapshot.hasData) return Center(child: Text('Data not available, please wait till syncing process done'));
+            if (!snapshot.hasData) return Center(child: CircularProgressIndicator(backgroundColor: Color(transBlackFontColor)));
+            return ListView(
+              children: snapshot.data.documents.map((DocumentSnapshot document) {
+                return GestureDetector(
+                  child: rowRecentPracticesCards(document),
+                  onTap: (){
+                    Navigator.of(context).push( MaterialPageRoute(
+                        builder: (context)=> MentalTrainingView()));
+                  },
+                );
+              }).toList(),
+            );
+          }
+        )
+      ),
+    );
+  }
+
+  /*
+  *
+  *       body: Container(
+        color: Colors.white,
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: 10,
@@ -43,10 +70,11 @@ class _PracticesViewState extends State<PracticesView> {
           }
         ),
       ),
-    );
-  }
+  * */
 
-  Widget rowRecentPracticesCards(int index) {
+
+  Widget rowRecentPracticesCards(DocumentSnapshot document)
+  {
     return Column(
       children: <Widget>[
         Container(
@@ -55,7 +83,7 @@ class _PracticesViewState extends State<PracticesView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset(ImageName.NATURE),
+              Image.network(document['imageURL']),
               SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -63,14 +91,14 @@ class _PracticesViewState extends State<PracticesView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     MyTextview(
-                        "Mental Training",
-                        fontSize: 17,
-                        color: Colors.black),
+                      document['title'],
+                      fontSize: 17,
+                      color: Colors.black),
                     SizedBox(height: 5),
                     MyTextview(
-                        "3 min 43 sec",
-                        fontSize: 15,
-                        color: Colors.black),
+                      document['duration'],
+                      fontSize: 15,
+                      color: Colors.black),
                   ],
                 ),
               ),

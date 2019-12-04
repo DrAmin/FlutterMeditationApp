@@ -7,3 +7,4 @@ int greyIconColor = 0XffBBC1C8;
 int blueAccentColor = 0Xff4A80F0;
 int cardGreyBg = 0XffF4F5F6;
 int pinkBg = 0XffFB9B9C;
+int transBlackFontColor = 0XffB3000000;
